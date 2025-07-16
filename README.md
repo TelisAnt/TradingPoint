@@ -5,7 +5,7 @@
 
 > A Django-powered dashboard for tracking stocks, ETFs, and cryptocurrencies with near-real-time data visualization.
 
-## ✨ Key Features
+##  Key Features
 
 - ⏱ **15-second delayed market data** (HTTPS polling)
 - 🛡 **Automatic fallback** to realistic dummy data
@@ -16,7 +16,7 @@
 ## 🛠 Technology Stack
 
 - **Backend**: Python, Django 4.0+ Framework, PostgreSQL
-- **Frontend**: HTML5, CSS3, JavaScript (Chart.js)
+- **Frontend**: HTML5, CSS3, JavaScript
 - **APIs**: Twelve Data (stocks), CoinGecko (crypto)
 - **Caching**: 5-minute API response caching
 
