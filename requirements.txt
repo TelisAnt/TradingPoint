@@ -1,0 +1,11 @@
+psycopg2-binary
+django-ratelimit
+requests
+django-crontab
+celery
+python-dotenv
+channels
+channels-redis
+daphne
+django
+
