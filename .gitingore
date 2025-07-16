@@ -21,6 +21,8 @@ venv/
 .env
 
 
+tradingtracker/settings.py
+
 # Ignore system files
 .DS_Store
 Thumbs.db
