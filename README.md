@@ -1,8 +1,9 @@
 # 📈 TradingPoint - Market Data WebApp
 
-![Market Screenshot](<img width="1206" height="786" alt="market" src="https://github.com/user-attachments/assets/2e5a4abe-c466-444b-93a5-31e5e1a8e2dc" />)
+![Market Screenshot]()
+<img width="1206" height="786" alt="market" src="https://github.com/user-attachments/assets/7fa5a3f7-a659-45d0-b5ae-52b0f018dca9" />
 
-> A beautiful Django-powered dashboard for tracking stocks, ETFs, and cryptocurrencies with near-real-time data visualization.
+> A Django-powered dashboard for tracking stocks, ETFs, and cryptocurrencies with near-real-time data visualization.
 
 ## ✨ Key Features
 
@@ -42,6 +43,7 @@ python manage.py migrate
 
 # 6. Start development server
 python manage.py runserver
+
 Visit http://localhost:8000 in your browser.
 
 🔄 How It Works
@@ -65,8 +67,13 @@ sequenceDiagram
 
 ## Contributing
   I welcome all contributions! Here's how:
+  
   Fork the repository
+  
   Create your feature branch (git checkout -b feature/amazing-feature)
+  
   Commit your changes (git commit -m 'Add some amazing feature')
+  
   Push to the branch (git push origin feature/amazing-feature)
+  
   Open a Pull Request
