@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingPoint - Education Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --darker: #020617;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --card-bg: rgba(15, 23, 42, 0.9);
+            --glass-effect: rgba(30, 41, 59, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background-color: var(--darker);
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            transform: translateY(-1px);
+        }
+
+        /* Profile Content */
+        .profile-content {
+            padding: 3rem 0;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .profile-info h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .profile-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        .logout-btn {
+            padding: 0.6rem 1.25rem;
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Education Cards */
+        .education-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .education-card {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .education-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .education-card h3 i {
+            color: var(--accent);
+        }
+
+        .chart-container {
+            height: 250px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .education-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .education-content p {
+            margin-bottom: 1rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .education-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="{% url 'homepage' %}" class="logo">
+                    <div class="logo-icon">T</div>
+                    <div class="logo-text">TradingPoint</div>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'homepage' %}">Home</a></li>
+                        <li><a href="{% url 'markets' %}">Markets</a></li>
+                    </ul>
+                </nav>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Education Content -->
+    <main class="container">
+        <div class="profile-content">
+            <div class="profile-header">
+            <div class="profile-avatar">
+                <!-- <img src="{{ user.profile.avatar.url }}" alt="Profile Avatar"> -->
+            </div>
+            <div class="profile-info">
+                <h2>
+                        {{ user.firstname }} {{ user.lastname }}
+                </h2>
+                <p>Trading Education Dashboard</p>
+                <p>Username: {{ user.username }}</p>
+                <p>Email: {{ user.email }}</p>
+                <p>Age: {{ user.age }}</p>
+            </div>
+        </div>
+            <h2 class="section-title">Trading Strategies Education</h2>
+            
+            <!-- Education Cards -->
+            <div class="education-cards">
+                <!-- Card 1: Support & Resistance -->
+                <div class="education-card">
+                    <h3><i class="fas fa-chart-line"></i> Support & Resistance</h3>
+                    <div class="chart-container">
+                        <canvas id="supportResistanceChart"></canvas>
+                    </div>
+                    <div class="education-content">
+                        <p>Support and resistance are key concepts in technical analysis. Support refers to a price level where a downtrend can be expected to pause due to a concentration of demand. Resistance is where a price uptrend can pause due to a concentration of supply.</p>
+                        <p>When the price breaks through a resistance level, that resistance often becomes support. The more times the price tests a support or resistance level without breaking it, the stronger that level becomes.</p>
+                    </div>
+                </div>
+                
+                <!-- Card 2: Moving Averages -->
+                <div class="education-card">
+                    <h3><i class="fas fa-wave-square"></i> Moving Averages</h3>
+                    <div class="chart-container">
+                        <canvas id="movingAveragesChart"></canvas>
+                    </div>
+                    <div class="education-content">
+                        <p>Moving averages smooth out price data to create a single flowing line, making it easier to identify the direction of the trend. The two most common types are:</p>
+                        <p><strong>SMA (Simple Moving Average):</strong> The average price over a specific number of periods.</p>
+                        <p><strong>EMA (Exponential Moving Average):</strong> Gives more weight to recent prices, making it more responsive to new information.</p>
+                        <p>Traders often look for crossovers between short-term and long-term moving averages as potential buy or sell signals.</p>
+                    </div>
+                </div>
+                
+                <!-- Card 3: RSI Indicator -->
+                <div class="education-card">
+                    <h3><i class="fas fa-balance-scale"></i> Relative Strength Index (RSI)</h3>
+                    <div class="chart-container">
+                        <canvas id="rsiChart"></canvas>
+                    </div>
+                    <div class="education-content">
+                        <p>The Relative Strength Index (RSI) is a momentum oscillator that measures the speed and change of price movements. It oscillates between 0 and 100 and is typically used to identify overbought or oversold conditions.</p>
+                        <p><strong>Overbought:</strong> RSI above 70 suggests the asset may be getting overvalued and could be primed for a trend reversal or corrective pullback.</p>
+                        <p><strong>Oversold:</strong> RSI below 30 suggests the asset may be getting undervalued and could be due for a trend reversal or rally.</p>
+                        <p>Divergences between RSI and price can also signal potential trend reversals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Logout Form -->
+    {% load static %}
+    <form id="logoutForm" action="{% url 'logout' %}" method="POST" style="display: none;">
+        {% csrf_token %}
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logout button
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('logoutForm').submit();
+                });
+            }
+            
+            // Highlight active nav item
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Initialize Charts
+            createSupportResistanceChart();
+            createMovingAveragesChart();
+            createRsiChart();
+        });
+
+        // Support & Resistance Chart
+        function createSupportResistanceChart() {
+            const ctx = document.getElementById('supportResistanceChart').getContext('2d');
+            
+            // Sample price data
+            const labels = Array.from({length: 30}, (_, i) => `Day ${i+1}`);
+            const prices = Array.from({length: 30}, (_, i) => 
+                100 + Math.sin(i/3) * 10 + Math.random() * 5
+            );
+            
+            // Support and resistance levels
+            const supportLevel = 95;
+            const resistanceLevel = 110;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Price',
+                            data: prices,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.1,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Support',
+                            data: Array(30).fill(supportLevel),
+                            borderColor: '#10b981',
+                            borderWidth: 1,
+                            borderDash: [5, 5],
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Resistance',
+                            data: Array(30).fill(resistanceLevel),
+                            borderColor: '#ef4444',
+                            borderWidth: 1,
+                            borderDash: [5, 5],
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Moving Averages Chart
+        function createMovingAveragesChart() {
+            const ctx = document.getElementById('movingAveragesChart').getContext('2d');
+            
+            // Sample price data
+            const labels = Array.from({length: 50}, (_, i) => `Day ${i+1}`);
+            const prices = Array.from({length: 50}, (_, i) => 
+                100 + Math.sin(i/5) * 15 + Math.random() * 8
+            );
+            
+            // Calculate SMAs (10-day and 20-day)
+            const sma10 = prices.map((_, i, arr) => {
+                if (i < 9) return null;
+                return arr.slice(i-9, i+1).reduce((a,b) => a + b, 0) / 10;
+            });
+            
+            const sma20 = prices.map((_, i, arr) => {
+                if (i < 19) return null;
+                return arr.slice(i-19, i+1).reduce((a,b) => a + b, 0) / 20;
+            });
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Price',
+                            data: prices,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.1,
+                            pointRadius: 0
+                        },
+                        {
+                            label: '10-day SMA',
+                            data: sma10,
+                            borderColor: '#f59e0b',
+                            borderWidth: 2,
+                            pointRadius: 0
+                        },
+                        {
+                            label: '20-day SMA',
+                            data: sma20,
+                            borderColor: '#10b981',
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // RSI Chart
+        function createRsiChart() {
+            const ctx = document.getElementById('rsiChart').getContext('2d');
+            
+            // Sample RSI data
+            const labels = Array.from({length: 30}, (_, i) => `Day ${i+1}`);
+            const rsiValues = Array.from({length: 30}, (_, i) => 
+                50 + Math.sin(i/2) * 30 + Math.random() * 10
+            );
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'RSI',
+                            data: rsiValues,
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.1,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Overbought (70)',
+                            data: Array(30).fill(70),
+                            borderColor: '#ef4444',
+                            borderWidth: 1,
+                            borderDash: [5, 5],
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Oversold (30)',
+                            data: Array(30).fill(30),
+                            borderColor: '#10b981',
+                            borderWidth: 1,
+                            borderDash: [5, 5],
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        y: {
+                            min: 0,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
