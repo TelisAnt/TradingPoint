@@ -54,9 +54,11 @@ Visit http://localhost:8000 in your browser.
 ## API Notes
   Free-tier API keys have rate limits
   Dummy data activates when:
-  🔥 API quota exceeded
-  🌐 Network issues
-  ❌ Invalid symbols requested
+   API quota exceeded
+
+   Network issues
+
+   Invalid symbols requested
 
 ## Contributing
   I welcome all contributions! Here's how:
