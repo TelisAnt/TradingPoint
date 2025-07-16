@@ -23,7 +23,7 @@
 ## 🚀 Quick Setup
 
 # 1. Clone repository
-git clone https://github.com/yourusername/tradingpoint.git
+git clone https://github.com/TelisAnt/tradingpoint.git
 
 cd tradingpoint
 
