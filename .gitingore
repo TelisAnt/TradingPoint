@@ -1,76 +1,26 @@
-# Django
-*.sqlite3
-*.pyc
+# Ignore Python cache
 __pycache__/
-/staticfiles/
-/media/
-/venv/
-.env
-.env.local
-*.env
-db.sqlite3
-
-# Project settings (never commit these!)
-/project/settings.py
-/settings.py
-
-# Secrets
-secrets.json
-*.key
-*.pem
-*.cert
-
-# IDE & Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*.sublime-*
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Python
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+*.pyo
 
-# Virtual environments
+
+# Ignore virtual environment
+myenv/
 venv/
-ENV/
-env/
 .env/
-venv*/
 
-# Logs and databases
+# Ignore VS Code settings
+.vscode/
+
+# Ignore compiled files or logs
 *.log
-*.sql
-*.sqlite
+*.pot
+*.mo
 
-# Testing
-.coverage
-htmlcov/
-.pytest_cache/
+# Ignore secrets and environment variables
+.env
+
+
+# Ignore system files
+.DS_Store
+Thumbs.db
